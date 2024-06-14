@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Monitoring</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Stock Monitoring History</h1>
+
+<table id="history">
+    <thead>
+    <tr>
+        <th>Stock Name</th>
+        <th>Current Price</th>
+        <th>Timestamp</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Rows will be added here dynamically -->
+    </tbody>
+</table>
+
+<script>
+    function addNotification(stockName, currentPrice, timestamp) {
+        const table = document.getElementById('history').getElementsByTagName('tbody')[0];
+        const newRow = table.insertRow();
+
+        const nameCell = newRow.insertCell(0);
+        const priceCell = newRow.insertCell(1);
+        const timestampCell = newRow.insertCell(2);
+
+        nameCell.textContent = stockName;
+        priceCell.textContent = currentPrice;
+        timestampCell.textContent = new Date(timestamp).toLocaleString();
+    }
+
+    // Example usage:
+    // This is where you would call addNotification when a stock meets the threshold
+    // addNotification('AAPL', 150.00, new Date());
+</script>
+
+</body>
+</html>

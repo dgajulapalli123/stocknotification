@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Stock Buddy </title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <h1 class="text-center">Stock Monitor</h1>
+    <table class="table table-bordered" id="stocksTable">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Price</th>
+            <th>Symbol</th>
+            <th>Threshold</th>
+            <th>Action</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody th:fragment="stockList">
+        <tr th:each="stock : ${stocks}">
+            <td th:text="${stock.id}"></td>
+            <td th:text="${stock.price}"></td>
+            <td th:text="${stock.symbol}"></td>
+            <td th:text="${stock.threshold}"></td>
+            <td th:text="${stock.action}"></td>
+            <td>
+                <form action="#" th:action="@{/delete/{id}(id=${stock.id})}" method="post">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="mt-4">
+        <a href="/" class="btn btn-secondary">Back to Home</a>
+    </div>
+</div>
+
+<script>
+    // Function to delete a stock
+    function deleteStock(button) {
+        var id = $(button).data('id');
+        $.ajax({
+            url: "/delete/" + id,
+            type: "DELETE",
+            success: function() {
+                // Remove the corresponding row from the table
+                $(button).closest('tr').remove();
+            },
+            error: function(xhr, status, error) {
+                console.error("Failed to delete stock:", error);
+            }
+        });
+    }
+
+    // Function to fetch and update stock data
+    function updateStockData() {
+        $.ajax({
+            url: "/stocks", // Endpoint to fetch stock data
+            type: "GET",
+            success: function(data) {
+                // Replace the table body with updated data
+                $('#stocksTable tbody').replaceWith($(data).find('tbody'));
+            },
+            error: function(xhr, status, error) {
+                console.error("Failed to fetch stock data:", error);
+            }
+        });
+    }
+
+    // Update stock data every few seconds
+    setInterval(updateStockData, 5000); // 5 seconds interval
+</script>
+</body>
+</html>

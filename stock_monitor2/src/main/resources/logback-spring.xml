@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <springProfile name="default">
+        <!-- Console Appender -->
+        <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n</pattern>
+            </encoder>
+        </appender>
+
+        <root level="DEBUG">
+            <appender-ref ref="CONSOLE" />
+        </root>
+
+        <!-- Set the logging level for different packages -->
+        <logger name="org.springframework.web" level="DEBUG" />
+        <logger name="com.example.stock_monitor" level="DEBUG" />
+    </springProfile>
+
+</configuration>

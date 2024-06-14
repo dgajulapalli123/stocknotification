@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Stock Price</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<h1>Stock Price</h1>
+<p>The current price of the stock is: <span th:text="${price}"></span></p>
+
+<script>
+  // Function to add the stock to the table in stocks.html
+  function addToStocksTable(symbol, price, threshold) {
+    var newRow = "<tr><td>" + symbol + "</td><td>" + price + "</td><td>" + threshold + "</td><td><form action='/delete/' method='post'><button type='submit' class='btn btn-danger'>Delete</button></form></td></tr>";
+    $("#stocksTable tbody").append(newRow);
+  }
+
+  // Call the function to add the stock to the table
+  addToStocksTable(symbol, price, treshold);
+</script>
+</body>
+</html>
